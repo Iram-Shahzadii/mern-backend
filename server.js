@@ -1,12 +1,21 @@
-require('dotenv').config()
-console.log("Gemini key loaded:", process.env.GOOGLE_GEMINI_KEY ? "✅ Yes" : "❌ No");
-const app = require('./src/app')
+// server.js
 
+// 1️⃣ dotenv ko sabse upar load karo
+require('dotenv').config();
 
+// 2️⃣ Gemini key check (debugging ke liye)
+console.log(
+  "Gemini key loaded:", 
+  process.env.GOOGLE_GEMINI_KEY ? "✅ Yes" : "❌ No"
+);
 
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000')
-})
+// 3️⃣ Backend app import karo
+const app = require('./src/app');
 
+// 4️⃣ Server start karo
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 
