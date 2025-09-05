@@ -1,35 +1,24 @@
-// const express = require('express');
-// const aiRoutes = require('./routes/ai.routes')
-// const cors = require('cors')
-
-// const app = express()
-
-// app.use(cors())
-
-
-// app.use(express.json())
-
-// app.get('/', (req, res) => {
-//     res.send('Hello World')
-// })
-
-// app.use('/ai', aiRoutes)
-
-// module.exports = app
 const express = require('express');
+const aiRoutes = require('./routes/ai.routes');
 const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+// ✅ Allow requests only from your Netlify frontend
+app.use(cors({
+    origin: 'https://sparkling-pegasus-f90e71.netlify.app', // replace with your Netlify URL
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
+
 app.use(express.json());
 
-// routes
-const aiRoutes = require('./routes/ai.routes');
+// ✅ Test route
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+// ✅ AI routes
 app.use('/ai', aiRoutes);
 
-module.exports = app; // make sure app is exported
-
-
-
-
+module.exports = app;
