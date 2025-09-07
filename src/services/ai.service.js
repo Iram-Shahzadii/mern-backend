@@ -1,4 +1,8 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+// ✅ Safety check for API key
+if (!process.env.GOOGLE_GEMINI_KEY) {
+    throw new Error("❌ GOOGLE_GEMINI_KEY is missing in environment variables!");
+}
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
