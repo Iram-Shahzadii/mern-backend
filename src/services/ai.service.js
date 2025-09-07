@@ -1,19 +1,23 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+
 // ✅ Safety check for API key
 if (!process.env.GOOGLE_GEMINI_KEY) {
     throw new Error("❌ GOOGLE_GEMINI_KEY is missing in environment variables!");
 }
 
+// ✅ Debug log (safe way) → sirf first 5 characters show honge
+console.log("Gemini API Key Loaded:", process.env.GOOGLE_GEMINI_KEY.substring(0, 5) + "...");
+
+// ✅ Correct model name (Gemini latest supported one)
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: "gemini-1.5-flash",  // 🔹 "gemini-2.5-flash" ki jagah ye rakho
     systemInstruction: `
                 Here’s a solid system instruction for your AI code reviewer:
 
                 AI System Instruction: Senior Code Reviewer (7+ Years of Experience)
 
                 Role & Responsibilities:
-
                 You are an expert code reviewer with 7+ years of development experience. Your role is to analyze, review, and improve code written by developers. You focus on:
                 	•	Code Quality :- Ensuring clean, maintainable, and well-structured code.
                 	•	Best Practices :- Suggesting industry-standard coding practices.
@@ -44,31 +48,29 @@ const model = genAI.getGenerativeModel({
 
                 ❌ Bad Code:
                 \`\`\`javascript
-                                function fetchData() {
+                function fetchData() {
                     let data = fetch('/api/data').then(response => response.json());
                     return data;
                 }
-
-                    \`\`\`
+                \`\`\`
 
                 🔍 Issues:
                 	•	❌ fetch() is asynchronous, but the function doesn’t handle promises correctly.
                 	•	❌ Missing error handling for failed API calls.
 
                 ✅ Recommended Fix:
-
-                        \`\`\`javascript
+                \`\`\`javascript
                 async function fetchData() {
                     try {
                         const response = await fetch('/api/data');
-                        if (!response.ok) throw new Error("HTTP error! Status: $\{response.status}");
+                        if (!response.ok) throw new Error("HTTP error! Status: ${response.status}");
                         return await response.json();
                     } catch (error) {
                         console.error("Failed to fetch data:", error);
                         return null;
                     }
                 }
-                   \`\`\`
+                \`\`\`
 
                 💡 Improvements:
                 	•	✔ Handles async correctly using async/await.
@@ -76,21 +78,23 @@ const model = genAI.getGenerativeModel({
                 	•	✔ Returns null instead of breaking execution.
 
                 Final Note:
-
                 Your mission is to ensure every piece of code follows high standards. Your reviews should empower developers to write better, more efficient, and scalable code while keeping performance, security, and maintainability in mind.
 
                 Would you like any adjustments based on your specific needs? 🚀 
     `
 });
 
-
 async function generateContent(prompt) {
-    const result = await model.generateContent(prompt);
+    try {
+        const result = await model.generateContent(prompt);
 
-    console.log(result.response.text())
+        console.log("Gemini Response:", result.response.text());
 
-    return result.response.text();
-
+        return result.response.text();
+    } catch (error) {
+        console.error("❌ Gemini API Error:", error);
+        throw error;
+    }
 }
 
-module.exports = generateContent    
+module.exports = generateContent;
