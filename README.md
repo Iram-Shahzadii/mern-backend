@@ -28,10 +28,9 @@ It manages user authentication with JWT, CRUD for blogs, and image upload functi
 - JWT (JSON Web Token)
   ## 🚀 Getting Started  
 ---
+
 ### 1️⃣ Clone the repository  
 ```bash
 git clone https://github.com/Iram-Shahzadii/blog-backend.git
 cd blog-backend
 
-git clone https://github.com/Iram-Shahzadii/blog-backend.git
-cd blog-backend
