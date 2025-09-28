@@ -1,36 +1,101 @@
-# 📝 Blog Backend  
+# 🤖 AI-Powered Code Reviewer (Backend)
 
-This is the **backend** of the Full Stack MERN Blog Application, built with **Node.js, Express.js, and MongoDB**.  
-It handles all the core logic including authentication, CRUD operations, and image uploads.  
-
----
-
-## 📋 Description  
-The backend provides secure REST APIs for the blog application.  
-It manages user authentication with JWT, CRUD for blogs, and image upload functionality using Multer.  
+This is the *backend* service for the *AI Code Reviewer Project, built using **Node.js + Express* with integration of *Google Gemini AI API*.  
+It provides APIs that analyze submitted code, detect potential issues, and suggest improvements using *AI-powered review capabilities*.  
 
 ---
 
-## ⚙️ Features  
-- 🔐 User Authentication with JWT  
-- 📝 Blog CRUD operations (Create, Read, Update, Delete)  
-- 🖼️ Upload blog images & author profile pictures  
-- 🛡️ Secure APIs with middleware  
-- 📂 Clean folder structure for scalability  
+## 🚀 Features
+- AI-powered code analysis (Google Gemini API integration)
+- RESTful API endpoints for submitting & reviewing code
+- Scalable backend structure with Express.js
+- Error handling & environment-based configuration
+- Easy to integrate with the React-based frontend
 
 ---
 
-## 🛠️ Tech Stack  
-- Node.js  
-- Express.js  
-- MongoDB + Mongoose  
-- Multer (for image upload)  
-- JWT (JSON Web Token)
-  ## 🚀 Getting Started  
+## 🛠️ Tech Stack
+- *Node.js* + *Express.js* – Backend framework  
+- *Google Gemini AI API* – Code analysis & suggestions  
+- *dotenv* – Secure environment configuration  
+- *Nodemon* – Development hot-reload  
+
 ---
 
-### 1️⃣ Clone the repository  
+## 📂 Project Structure
+
+mern-backend/ │── src/ │   ├── controllers/    # API controllers │   ├── routes/         # API routes │   ├── services/       # AI service (Gemini API integration) │   └── app.js          # Express app setup │── server.js           # Entry point │── .env                # Environment variables │── package.json        # Dependencies & scripts
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/Iram-Shahzadii/blog-backend.git
-cd blog-backend
+git clone https://github.com/Iram-Shahzadii/mern-backend.git
+cd mern-backend
+
+2️⃣ Install dependencies
+
+npm install
+
+3️⃣ Configure Environment Variables
+
+Create a .env file in the root directory and add the following:
+
+PORT=3000
+GOOGLE_GEMINI_KEY=your_api_key_here
+
+⚠️ Note: Never commit .env to GitHub. Make sure it’s added in .gitignore.
+
+4️⃣ Run the server
+
+For development:
+
+npm run dev
+
+Server will start on:
+👉 http://localhost:3000
+
+
+---
+
+📡 API Endpoints
+
+🔹 AI Code Review
+
+POST /api/review → Submit code for review
+Request body example:
+
+{
+  "code": "function sum(a, b) { return a + b; }"
+}
+
+Response example:
+
+{
+  "issues": ["No input validation"],
+  "suggestions": ["Add type checking for inputs"]
+}
+
+
+
+---
+
+📌 Notes
+
+This backend uses Google Gemini AI, so you must configure a valid API key in .env.
+
+No MongoDB database is required in this project (stateless AI service).
+
+Designed to work with the mern-frontend of this project.
+
+
+
+---
+
+📜 License
+
+This project is licensed under the MIT License.
+
 
