@@ -96,4 +96,5 @@ Designed to work with the mern-frontend of this project.
 
 📜 License
 
+This project is licensed under the MIT License.
 You are free to use, modify, and distribute this software in accordance with the terms of the license.
